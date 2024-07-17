@@ -1,0 +1,39 @@
+services:
+  api:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - mode: ingress
+        target: 3000
+        published: 3000
+    environment:
+      - REDIS_HOST=redisx
+      - REDIS_PORT=6379
+    depends_on:
+      - redisx
+  
+  processor:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 2
+    environment:
+      - REDIS_HOST=redisx
+      - REDIS_PORT=6379
+      - PROCESSOR=true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "127.0.0.1:3000"]
+    depends_on:
+      - redisx
+
+  redisx:
+    image: redis:alpine
+    x-defang-redis: true
+    ports:
+      - mode: host
+        target: 6379
+        published: 6379
