@@ -9,7 +9,7 @@ services:
         target: 3000
         published: 3000
     environment:
-      - REDIS_HOST=redisx
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
     depends_on:
       - redisx
@@ -22,7 +22,7 @@ services:
     deploy:
       replicas: 2
     environment:
-      - REDIS_HOST=redisx
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
       - PROCESSOR=true
     healthcheck:
@@ -30,7 +30,7 @@ services:
     depends_on:
       - redisx
 
-  redisx:
+  redis:
     image: redis:alpine
     x-defang-redis: true
     ports:
