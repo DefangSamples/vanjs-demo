@@ -45,6 +45,12 @@ if (process.env.PROCESSOR === 'true') {
       res.status(404).send({ error: 'Job not found' });
     }
   });
+
+  // count all incomplete tasks in queue
+  app.get('/tasks', async (req, res) => {
+    const jobs = await taskQueue.getJobCounts();
+    res.send(jobs);
+  });
 }
 
 app.get('/', (req, res) => {
