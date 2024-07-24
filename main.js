@@ -53,7 +53,10 @@ if (process.env.PROCESSOR === 'true') {
   });
 }
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+  console.log('@@ PING: ', await redisConnection.ping());
+  console.log('@@ Alive.');
+
   res.send('Alive');
 });
 
