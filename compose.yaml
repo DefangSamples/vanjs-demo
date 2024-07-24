@@ -27,7 +27,7 @@ services:
     deploy:
       replicas: 2
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=reddit
       - REDIS_PORT=6379
       - PROCESSOR=true
     healthcheck:
