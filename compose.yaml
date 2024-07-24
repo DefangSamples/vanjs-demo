@@ -11,6 +11,11 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000"]
+      interval: 5s
+      timeout: 2s
+      retries: 1
     depends_on:
       - redis
   
@@ -27,6 +32,9 @@ services:
       - PROCESSOR=true
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000"]
+      interval: 5s
+      timeout: 2s
+      retries: 1
     depends_on:
       - redis
 
