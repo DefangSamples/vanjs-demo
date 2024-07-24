@@ -9,8 +9,13 @@ services:
         target: 3000
         published: 3000
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=reddit
       - REDIS_PORT=6379
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "127.0.0.1:3000"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
     depends_on:
       - redis
   
@@ -27,6 +32,9 @@ services:
       - PROCESSOR=true
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "127.0.0.1:3000"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
     depends_on:
       - redis
 
